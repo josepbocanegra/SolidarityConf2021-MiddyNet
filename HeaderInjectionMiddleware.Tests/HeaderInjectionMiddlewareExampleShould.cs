@@ -13,7 +13,14 @@ namespace HeaderInjectionMiddlewareExample.Tests
         [Fact]
         public async Task InjectAHeader()
         {
+            var previousResponse = new APIGatewayHttpApiV2ProxyResponse();
+            var context = new MiddyNetContext(Substitute.For<ILambdaContext>());
+            var headerInjectionMiddleware = new HeaderInjectionMiddleware("headerName", "headerValue");
 
+            var response = await headerInjectionMiddleware.After(previousResponse, context);
+
+            response.Headers.Should().ContainKey("headerName");
+            response.Headers["headerName"].Should().Be("headerValue");
         }
     }
 }

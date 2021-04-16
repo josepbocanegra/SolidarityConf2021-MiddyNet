@@ -20,7 +20,8 @@ namespace WithMiddyNet
             Use(new SSMMiddleware<APIGatewayHttpApiV2ProxyRequest, APIGatewayHttpApiV2ProxyResponse>(new SSMOptions
                 {
                     ParametersToGet = new List<SSMParameterToGet> { new SSMParameterToGet("greetingsType", "greetingsType") }
-                }));       
+                }));
+            Use(new HeaderInjectionMiddleware("X-MyHeader", "My header value"));
         }
 
         protected override Task<APIGatewayHttpApiV2ProxyResponse> Handle(APIGatewayHttpApiV2ProxyRequest request, MiddyNetContext context)
