@@ -1,8 +1,6 @@
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
-using Amazon.SimpleSystemsManagement;
-using Amazon.SimpleSystemsManagement.Model;
-using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Voxel.MiddyNet;
 using Voxel.MiddyNet.ProblemDetailsMiddleware;
@@ -13,66 +11,40 @@ using Voxel.MiddyNet.Tracing.ApiGatewayMiddleware;
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 namespace WithMiddyNet
 {
-    public class Greeter
+    public class Greeter : MiddyNet<APIGatewayHttpApiV2ProxyRequest, APIGatewayHttpApiV2ProxyResponse>
     {
-        public async Task<APIGatewayHttpApiV2ProxyResponse> Handler(APIGatewayHttpApiV2ProxyRequest request, ILambdaContext context)
+        public Greeter()
         {
-            try
+            Use(new ApiGatewayHttpApiV2TracingMiddleware());
+            Use(new ProblemDetailsMiddlewareV2(new ProblemDetailsMiddlewareOptions().Map<WrongGreetingTypeException>(400)));
+            Use(new SSMMiddleware<APIGatewayHttpApiV2ProxyRequest, APIGatewayHttpApiV2ProxyResponse>(new SSMOptions
             {
-                var traceParent = request.Headers.ContainsKey("traceparent")
-                    ? request.Headers["traceparent"]
-                    : string.Empty;
+                ParametersToGet = new List<SSMParameterToGet> { new SSMParameterToGet("greetingsType", "greetingsType") }
+            }));
+        }
 
-                var traceState = request.Headers.ContainsKey("tracestate")
-                    ? request.Headers["tracestate"]
-                    : string.Empty;
+        protected override Task<APIGatewayHttpApiV2ProxyResponse> Handle(APIGatewayHttpApiV2ProxyRequest request, MiddyNetContext context)
+        {
+            var name = request.PathParameters["name"];
 
-                var name = request.PathParameters["name"];
+            context.Logger.Log(LogLevel.Info, $"Greeter called with name {name}");
 
-                context.Logger.Log($"Greeter called with name {name}, traceparent {traceParent}, tracestate {traceState}");
+            var greetingsType = context.AdditionalContext["greetingsType"].ToString();
 
-                string greetingsType;
-                using (var client = new AmazonSimpleSystemsManagementClient())
-                {
-                    var response = await client.GetParameterAsync(new GetParameterRequest
-                    {
-                        Name = "greetingsType",
-                        WithDecryption = false
-                    }).ConfigureAwait(false);
-                    greetingsType = response.Parameter.Value;
-                }
+            if (greetingsType != "formal" && greetingsType != "colloquial")
+                throw new WrongGreetingTypeException();
 
-                if (greetingsType != "formal" && greetingsType != "colloquial")
-                    throw new WrongGreetingTypeException();
+            var greeting = greetingsType == "formal" ? "Hello" : "Hi";
 
-                var greeting = greetingsType == "formal" ? "Hello" : "Hi";
+            var message = $"{greeting} {name}. Welcome to our online store.";
 
-                var message = $"{greeting} {name}. Welcome to our online store.";
+            context.Logger.Log(LogLevel.Info, "Greeting message generated.");
 
-                context.Logger.Log($"Greeting message generated. traceparent {traceParent}, tracestate {traceState} ");
-
-                return new APIGatewayHttpApiV2ProxyResponse
-                {
-                    StatusCode = 200,
-                    Body = message
-                };
-            }
-            catch (WrongGreetingTypeException)
+            return Task.FromResult(new APIGatewayHttpApiV2ProxyResponse
             {
-                return new APIGatewayHttpApiV2ProxyResponse
-                {
-                    StatusCode = 400,
-                    Body = "Wrong greeting type"
-                };
-            }
-            catch (Exception ex)
-            {
-                return new APIGatewayHttpApiV2ProxyResponse
-                {
-                    StatusCode = 500,
-                    Body = ex.Message
-                };
-            }
+                StatusCode = 200,
+                Body = message
+            });
         }
     }
 }
