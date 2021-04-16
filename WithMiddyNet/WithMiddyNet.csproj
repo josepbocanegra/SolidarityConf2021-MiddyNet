@@ -3,15 +3,18 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <AssemblyName>WithoutMiddyNet</AssemblyName>
+    <AssemblyName>WithMiddyNet</AssemblyName>
     <PackageId>aws-csharp</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Amazon.Lambda.APIGatewayEvents" Version="2.4.0" />
-    <PackageReference Include="Amazon.Lambda.Core" Version="1.1.0" />
+    <PackageReference Include="Amazon.Lambda.Core" Version="2.0.0" />
     <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.0.1" />
-    <PackageReference Include="AWSSDK.SimpleSystemsManagement" Version="3.7.0.1" />
+    <PackageReference Include="Voxel.MiddyNet" Version="1.3.1" />
+    <PackageReference Include="Voxel.MiddyNet.ProblemDetails" Version="1.3.1" />
+    <PackageReference Include="Voxel.MiddyNet.SSMMiddleware" Version="1.3.1" />
+    <PackageReference Include="Voxel.MiddyNet.Tracing.ApiGatewayMiddleware" Version="1.3.1" />
   </ItemGroup>
 
 </Project>

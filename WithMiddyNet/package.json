@@ -1,0 +1,10 @@
+{
+  "name": "Greeter",
+  "description": "",
+  "version": "0.1.0",
+  "dependencies": {},
+  "devDependencies": {
+    "serverless-iam-roles-per-function": "^3.1.0",
+    "serverless-pseudo-parameters": "^2.5.0"
+  }
+}

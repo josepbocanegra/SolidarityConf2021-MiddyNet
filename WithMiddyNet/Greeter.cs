@@ -4,14 +4,19 @@ using Amazon.SimpleSystemsManagement;
 using Amazon.SimpleSystemsManagement.Model;
 using System;
 using System.Threading.Tasks;
+using Voxel.MiddyNet;
+using Voxel.MiddyNet.ProblemDetailsMiddleware;
+using Voxel.MiddyNet.SSMMiddleware;
+using Voxel.MiddyNet.Tracing.ApiGatewayMiddleware;
+
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
-namespace WithoutMiddyNet
+namespace WithMiddyNet
 {
     public class Greeter
     {
-       public async Task<APIGatewayHttpApiV2ProxyResponse> Handler(APIGatewayHttpApiV2ProxyRequest request, ILambdaContext context)
-       {
+        public async Task<APIGatewayHttpApiV2ProxyResponse> Handler(APIGatewayHttpApiV2ProxyRequest request, ILambdaContext context)
+        {
             try
             {
                 var traceParent = request.Headers.ContainsKey("traceparent")
@@ -68,6 +73,6 @@ namespace WithoutMiddyNet
                     Body = ex.Message
                 };
             }
-       }
+        }
     }
 }

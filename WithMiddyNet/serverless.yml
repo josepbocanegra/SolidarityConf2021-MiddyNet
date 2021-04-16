@@ -4,7 +4,6 @@ frameworkVersion: '2'
 plugins:
   - serverless-iam-roles-per-function
   - serverless-pseudo-parameters
-
 provider:
   name: aws
   runtime: dotnetcore3.1
@@ -17,9 +16,9 @@ package:
 
 functions:
   greeter:
-    handler: WithoutMiddyNet::WithoutMiddyNet.Greeter::Handler
+    handler: WithMiddyNet::WithMiddyNet.Greeter::Handler
     package:
-      artifact: bin/Release/netcoreapp3.1/withoutMiddyNet.zip
+      artifact: bin/Release/netcoreapp3.1/withMiddyNet.zip
     events:
       - httpApi:
           path: /greeting/{name}
