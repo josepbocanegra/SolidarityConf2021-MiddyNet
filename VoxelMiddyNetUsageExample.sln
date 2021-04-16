@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WithoutMiddyNet", "WithoutMiddyNet\WithoutMiddyNet.csproj", "{4512F7D7-0935-4303-A428-2895594B9D83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WithoutMiddyNet", "WithoutMiddyNet\WithoutMiddyNet.csproj", "{4512F7D7-0935-4303-A428-2895594B9D83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WithMiddyNet", "WithMiddyNet\WithMiddyNet.csproj", "{4CF74185-3EFF-41EB-987A-96B7D86A5E93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WithMiddyNet", "WithMiddyNet\WithMiddyNet.csproj", "{4CF74185-3EFF-41EB-987A-96B7D86A5E93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeaderInjectionMiddlewareExample.Tests", "HeaderInjectionMiddleware.Tests\HeaderInjectionMiddlewareExample.Tests.csproj", "{067E29DE-A830-4B31-BDF2-4DBCC96D309B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeaderInjectionMiddlewareExample", "HeaderInjectionMiddlewareExample\HeaderInjectionMiddlewareExample.csproj", "{CE242D57-CC7C-4D82-AF2E-CD69A3401852}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{4CF74185-3EFF-41EB-987A-96B7D86A5E93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CF74185-3EFF-41EB-987A-96B7D86A5E93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CF74185-3EFF-41EB-987A-96B7D86A5E93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{067E29DE-A830-4B31-BDF2-4DBCC96D309B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{067E29DE-A830-4B31-BDF2-4DBCC96D309B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{067E29DE-A830-4B31-BDF2-4DBCC96D309B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{067E29DE-A830-4B31-BDF2-4DBCC96D309B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE242D57-CC7C-4D82-AF2E-CD69A3401852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE242D57-CC7C-4D82-AF2E-CD69A3401852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE242D57-CC7C-4D82-AF2E-CD69A3401852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE242D57-CC7C-4D82-AF2E-CD69A3401852}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
