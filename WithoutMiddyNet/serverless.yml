@@ -1,0 +1,23 @@
+service: GreeterSimple
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: dotnetcore3.1
+  lambdaHashingVersion: 20201221
+  region: eu-west-1
+  stage: dev
+
+package:
+  individually: true
+
+functions:
+  greeter:
+    handler: WithoutMiddyNet::WithoutMiddyNet.Greeter::Handler
+    package:
+      artifact: bin/Release/netcoreapp3.1/withoutMiddyNet.zip
+    events:
+      - httpApi:
+          path: /greeting/{name}
+          method: GET              
+          
